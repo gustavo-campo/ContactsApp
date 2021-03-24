@@ -1,17 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Ver todos los contactos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card *ngFor="let contact of contactList">
+    <ion-card-header>
+      <ion-card-subtitle>Empresa: {{ contact.company }}</ion-card-subtitle>
+      <ion-card-title>{{ contact.firstName }} {{ contact.lastName }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <p>Teléfono: {{ contact.phoneNumber }}</p>
+      <p>Email: {{ contact.email }}</p>
+    </ion-card-content>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-row class="cardfooter">
+      <ion-col>
+        <p class="ion-float-right">
+          <ion-button (click)="presentModal(contact)">Editar</ion-button>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Consultando con el servidor...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
