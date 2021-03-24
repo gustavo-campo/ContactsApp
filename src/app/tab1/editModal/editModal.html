@@ -1,0 +1,46 @@
+<!-- my-modal.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Editar Contacto
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button fill="solid" (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label>Nombre: </ion-label>
+    <ion-input placeholder="Nombre" value="{{ tempContact.firstName }}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Apellido: </ion-label>
+    <ion-input placeholder="Apellido" value="{{ tempContact.lastName }}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Empresa: </ion-label>
+    <ion-input placeholder="Empresa" value="{{ tempContact.company }}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Teléfono: </ion-label>
+    <ion-input placeholder="Teléfono" value="{{ tempContact.phoneNumber }}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Email: </ion-label>
+    <ion-input placeholder="Email" value="{{ tempContact.email }}"></ion-input>
+  </ion-item>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <!-- NO IMPLEMENTADO AUN -->
+    <ion-button disabled="true" (click)="dismiss()" expand="full">Guardar Cambios</ion-button>
+    <!-- NO IMPLEMENTADO AUN -->
+    <ion-button disabled="true" (click)="dismiss()" expand="full" color="danger">Eliminar Contacto</ion-button>
+  </ion-toolbar>
+</ion-footer>
