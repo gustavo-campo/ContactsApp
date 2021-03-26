@@ -15,12 +15,26 @@ export class UsersService extends ApiService{
     return this.get(USER.BASE);
   }
 
-   /**
-    * getAllContactsByPage: metodo para hacer uso del paginado en los resultados
+  /**
+    * getAllCompanies: metodo para consultar toda la lista de empresas registradas
     */
-     public getAllContactsByPage(pageNumber: number): Observable<any> {
-      return this.get(USER.BASE + "?pageNumber=" + pageNumber +"&PageSize=5");
-    }
+  public getAllCompanies(): Observable<any> {
+    return this.get(USER.BASE + "/companies/");
+  }
+
+  /**
+  * getAllContactsByPage: metodo para hacer uso del paginado en los resultados
+  */
+    public getAllContactsByPage(pageNumber: number): Observable<any> {
+    return this.get(USER.BASE + "?pageNumber=" + pageNumber +"&PageSize=5");
+  }
+
+  /**
+    * getAllContactsByPage: metodo para filtrar por empresa y hacer uso del paginado en los resultados
+    */
+  public getContactsByCompanyAndPage(pageNumber: number, company: string): Observable<any> {
+      return this.get(USER.BASE + "/company/"+ company +"?pageNumber=" + pageNumber +"&PageSize=5");
+  }
 
   /**
    * createContact: metodo para crear un contacto

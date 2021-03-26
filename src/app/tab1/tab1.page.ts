@@ -16,12 +16,26 @@ export class Tab1Page {
 
   //lista de contactos a mostrar
   contactList: Contact[];
+
+  //lista de empresas
+  companies: string[] = ["Todos"];
+
+  //empresa seleccionada, por defecto todos
+  selectedCompany = "Todos";
+
   //indice de resultados, se inicializa en la primer pagina
   pageIndex = 1;
 
   ngOnInit() {
+    //consultamos todas las empresas registradas
+    this.userService.getAllCompanies().subscribe(data => {
+      console.log(data.data);
+      this.companies = data.data;
+      this.companies.unshift("Todos");
+    });
+
     //al iniciar consultamos al servidor y pedimos la pagina 1 de resultados
-    this.userService.getAllContactsByPage(this.pageIndex).subscribe(data => {
+    this.userService.getContactsByCompanyAndPage(this.pageIndex, this.selectedCompany).subscribe(data => {
       this.contactList = data.data;
       //actualizamos el indice
       this.pageIndex += 1;
@@ -29,12 +43,24 @@ export class Tab1Page {
     
   }
 
+  //metodo para actualizar la lista luego de seleccionar una empresa
+  refreshContacts() {
+    //re inicializamos el indice
+    this.pageIndex = 1;
+    //volvemos a consultar
+    this.userService.getContactsByCompanyAndPage(this.pageIndex, this.selectedCompany).subscribe(data => {
+      this.contactList = data.data;
+      //actualizamos el indice
+      this.pageIndex += 1;
+    });
+  }
+
   //metodo que se ejecuta al llegar al final de la lista, intenta traer mas resultados
   loadData(event) {
     setTimeout(() => {
       event.target.complete();
       //volvemos a consultar al servidor pero con el index actualizado
-      this.userService.getAllContactsByPage(this.pageIndex).subscribe(data => {
+      this.userService.getContactsByCompanyAndPage(this.pageIndex, this.selectedCompany).subscribe(data => {
         data.data.forEach(element => {
           this.contactList.push(element);
         });
@@ -56,6 +82,11 @@ export class Tab1Page {
       cssClass: 'my-custom-class'
     });
     return await modal.present();
+  }
+
+  selectAction(data: any) {
+    this.selectedCompany = data.detail.value;
+    this.refreshContacts();
   }
 
 }
